@@ -8,6 +8,7 @@ class Heap:
         sort nodelist by node.f
 
         @type oldlist:nodelist
+        @type newlist:nodelist
         '''
         # Heap root
         self.root = 0
@@ -17,14 +18,24 @@ class Heap:
         self.newlist = []
     def insert(self, value):
         """
-        Add element to the list end
+        Add element to the list end, and from bottom to top update
 
         @type value: node
         """
         self.newlist.append(value)
         self.updateHeap('up')
     def pop(self):
-        """ Delete root element"""
+        """ 
+        Delete root element
+        
+        return a node
+        """
+        if len(self.newlist)==1:
+            a = self.newlist[0]
+            self.newlist.pop()
+            return a
+        if len(self.newlist)==0:
+            return EOFError
         a = self.newlist[0]
         self.newlist[0] = self.newlist[-1]
         self.newlist.pop()
@@ -44,6 +55,10 @@ class Heap:
         @type i : int
         """
         return (((i + 1) << 1) + 1) - 1
+    def initialHeap(self, olist):
+        self.oldlist = olist
+        self.newlist = []
+        self.buildHeap(self.oldlist)
     def buildHeap(self, oldlist):
         """ Build a ordered list from a raw list"""
         for i in range(len(oldlist)):
@@ -79,7 +94,7 @@ class Heap:
                     # reach the bottom end
                     break
                 try: 
-                    print self.newlist[self.right_child_idx(i)]
+                    self.newlist[self.right_child_idx(i)]
                 except IndexError:
                     root = min(self.newlist[i].f,self.newlist[self.left_child_idx(i)].f)
                 else:
@@ -101,7 +116,7 @@ class Heap:
                     continue
                 try: 
                     # whether it only has left child
-                    print self.newlist[self.right_child_idx(i)]
+                    self.newlist[self.right_child_idx(i)]
                 except IndexError:
                     # compare root and left child only
                     root = min(self.newlist[i].f,self.newlist[self.left_child_idx(i)].f)
