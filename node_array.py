@@ -5,14 +5,16 @@ import matplotlib.pyplot as plt
 
 class node:
     def __init__(self,block):
-        # @type block: bool
-        self.f = random.randint(1,10)
+        """ 
+        @type block: bool
+        """
+        self.f = 0
         self.g = 0
         self.h = 0
         self.father = None
-        self.isBlock = block
-    def setf(self,value):
-        self.f = value
+        self.isBlock = block  
+    def setf(self):
+        self.f = self.g + self.h
     def setfather(self,fathernode):
         """ @type fathernode: node"""
         self.father = fathernode
