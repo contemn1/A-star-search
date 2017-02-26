@@ -2,9 +2,10 @@ import numpy as np
 import random
 import networkx as nx
 import matplotlib.pyplot as plt
+from enum import Enum
 
 class node:
-    def __init__(self,block):
+    def __init__(self,block,arrayidx):
         """ 
         @type block: bool
         """
@@ -12,12 +13,21 @@ class node:
         self.g = 0
         self.h = 0
         self.father = None
+        self.pointer = [0,0]
         self.isBlock = block  
+        self.arrayidx = arrayidx
+        self.listidx = None
+        self.inclose = False
     def setf(self):
         self.f = self.g + self.h
     def setfather(self,fathernode):
         """ @type fathernode: node"""
         self.father = fathernode
+    def clean(self):
+        self.f = 0
+        self.g = 0
+        self.h = 0
+        self.pointer = [0,0]
 class array:
     def __init__(self,m,n):
         # m rows n colums
