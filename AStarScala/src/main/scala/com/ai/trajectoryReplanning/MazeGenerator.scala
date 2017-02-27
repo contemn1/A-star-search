@@ -191,6 +191,10 @@ class MazeGenerator(val cellMatrix: Array[Array[MazeCell]]) {
     val sourceMap = new mutable.HashMap[(Int, Int), (Int, Int)]()
     var costSoFar = new mutable.HashMap[(Int, Int), CostTuple]()
     costSoFar += start -> CostTuple(0, manhatanDistance(start, goal))
+    if (blcokedCell(start) || blcokedCell(goal)) {
+      return SearchResult(false, sourceMap, costSoFar)
+    }
+
     val (res, _) = repeatedFindPath(start, frontier, sourceMap, costSoFar)
     res
   }
@@ -233,7 +237,7 @@ object MinOrder extends Ordering[CellInformation] {
   def compare(x:CellInformation, y:CellInformation) = {
     var result = y.fScore compare x.fScore
     if (result == 0) {
-      result = y.gScore compare x.gScore
+      result = x.gScore compare y.gScore
     }
     result
   }
