@@ -3,7 +3,7 @@ import random
 import networkx as nx
 import matplotlib.pyplot as plt
 from enum import Enum
-
+from scipy import sparse
 class node:
     def __init__(self,block,arrayidx):
         """ 
@@ -28,15 +28,19 @@ class node:
         self.g = 0
         self.h = 0
         self.pointer = [0,0]
+        self.listidx = None
+        self.inclose = False
 class array:
     def __init__(self,m,n):
         # m rows n colums
         self.m = m
         self.n = n
-        self.array = np.zeros((m,n))
+        self.array = np.zeros((m,n),np.int8)
+        #self.array_ = np.random((1001,1001),np.bool)
         self.graph = nx.DiGraph()
         self.initgraph()
         self.initBlock()
+        self.array = sparse.csr_matrix(self.array)
     def DFS(self):
         traverselist = list(nx.dfs_preorder_nodes(self.graph,(0,0)))
         return traverselist
@@ -62,6 +66,7 @@ class array:
     def initBlock(self):
         # block chance 0.3
         p_list = [1,1,1,0,0,0,0,0,0,0]
+        #p_list = [True,True,True,False,False,False,False,False,False,False]
         traverselist = self.DFS()
         for i in traverselist:
             self.array[i[0],i[1]] = random.choice(p_list)

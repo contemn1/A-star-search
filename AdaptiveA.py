@@ -31,6 +31,9 @@ def gen_path(endnode, *arg):
             coord = (lambda x,y:[x[0]+y[0],x[1]+y[1]])\
             (tmp.pointer, node2arrayidx(tmp, nodeList, grid))
             tmp = arrayidx2node(coord, nodeList, grid)
+            if tmp.g==0:
+                path.append(tmp)
+                break
     else:
         while tmp.pointer!=[0,0]:
             path.append(tmp)
@@ -40,7 +43,7 @@ def gen_path(endnode, *arg):
             path.append(startnode)
     return path
 grid = gridworlds.grids[0]
-grid.array = np.asarray([map(int, i) for i in alist])
+#grid.array = np.asarray([map(int, i) for i in alist])
 grid.array[0,0] = 0
 grid.array[M-1,N-1] = 0
 nodeList = []
@@ -222,11 +225,13 @@ def newnodeaction(i, minnode):
     i.g = minnode.g + 1
     i.setf()
 
-
+closelist_ = []
 while True:
     count = 0
     openlist = hp.Heap([])
     searchlist = []
+    closelist_.extend(closelist)
+    closelist = []
     newblockidx = []
     # update new 1 to tmparray map
     newblockidx.extend(probe(startnode.arrayidx[0], startnode.arrayidx[1], grid))
@@ -253,7 +258,7 @@ while True:
     # repeatly extend openlist and closelist until
     # endpoint in openlist
     try:
-        while len(openlist.newlist)>1:
+        while len(openlist.newlist)>=1:
             searchlist = []
             minnode = openlist.pop()
             count = count + 1
@@ -264,10 +269,11 @@ while True:
                 pathend = blockinpath(path, nodeList, grid)
                 # update h value in closelist
                 for i in closelist:
-                    i.h = pathend.f - i.g
+                    i.h = path[-1].f - i.g
                 startnode = pathend
                 break
             closelist.append(minnode)
+            minnode.inclose = True
             # search current point
             # arrayidx = nodeidx2arrayidx(nodeList.index(minnode), grid)
             arrayidx = minnode.arrayidx
@@ -281,12 +287,13 @@ while True:
             # add searchlist node to openlist if it has not already been in openlist and closelist
             # and set these nodes father the node was searched
             for i in searchlist:
-                if i.listidx!=None:
+                if i in openlist.newlist:
+                #if i.listidx!=None:
                     # if node already in openlist, find whether path 
                     # searched node--> i has smaller g value
                     visitedaction(i, minnode)
                     continue
-                if i.inclose:
+                if i in closelist:
                     continue
                 #i.setfather(minnode)
                 newnodeaction(i, minnode)
@@ -309,27 +316,35 @@ while True:
         Endflag = True
     if Endflag==True:
         break
+remove_ = []
+closelist_ = list(set(closelist_))
+for i in closelist_:
+    if i.isBlock==True:
+        remove_.append(i)
+for i in remove_:
+    closelist_.remove(i)
 
-path = gen_path(endnode)
+#path = gen_path(endnode)
 matrix = np.zeros((M,N))
 matrix_ = np.zeros((M,N))
-for i in path:
-    matrix[node2arrayidx(i, nodeList, grid)[0],node2arrayidx(i, nodeList, grid)[1]] = 1
-print closelist[0:10], '\n', len(closelist)
+#for i in path:
+#    matrix[node2arrayidx(i, nodeList, grid)[0],node2arrayidx(i, nodeList, grid)[1]] = 1
+#print closelist[0:10], '\n', len(closelist)
 f = open('closelistAA' + openlist.g + '.txt', 'w')
-for i in closelist:
+for i in closelist_:
     matrix_[i.arrayidx[0], i.arrayidx[1]] = 1
 for i in matrix_:
     for j in i:
         f.write(str(int(j)))
     f.write("\n")
 f.close()
-f = open('pathAA' + openlist.g + '.txt', 'w')
+print len(closelist_)
+'''f = open('pathAA' + openlist.g + '.txt', 'w')
 for i in matrix:
     for j in i:
         f.write(str(int(j)))
     f.write("\n")
-f.close()
+f.close()'''
 
 
 

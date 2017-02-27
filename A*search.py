@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 import binary_heap_gmin as hp
 import random
@@ -33,7 +34,8 @@ def gen_path(endnode):
     path.append(startnode)
     return path
 grid = gridworlds.grids[0]
-#grid.array = np.asarray([map(int, i) for i in alist])
+print sys.getsizeof(grid.array)
+grid.array = np.asarray([map(int, i) for i in alist])
 grid.array[0,0] = 0
 grid.array[M-1,N-1] = 0
 nodeList = []
@@ -263,7 +265,7 @@ for i in path:
     matrix[node2arrayidx(i, nodeList, grid)[0],node2arrayidx(i, nodeList, grid)[1]] = 1
 print matrix[0:10,0:10]
 print grid.array[0:10,0:10]
-print closelist[0:10], '\n', len(closelist)
+print len(closelist)
 f = open('closelist' + openlist.g + '.txt', 'w')
 for i in closelist:
     matrix_[i.arrayidx[0], i.arrayidx[1]] = 1
