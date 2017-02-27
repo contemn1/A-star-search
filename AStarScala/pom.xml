@@ -28,7 +28,11 @@
       <artifactId>scala-library</artifactId>
       <version>${scala.version}</version>
     </dependency>
-
+    <dependency>
+      <groupId>org.scalafx</groupId>
+      <artifactId>scalafx_2.12</artifactId>
+      <version>8.0.102-R11</version>
+    </dependency>
   </dependencies>
 
   <build>

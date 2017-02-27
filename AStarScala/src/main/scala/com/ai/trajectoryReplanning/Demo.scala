@@ -11,8 +11,6 @@ import javafx.scene.shape.Rectangle
 import javafx.stage.Stage
 import javafx.scene.{Group, Scene}
 
-import scalafx.Includes._
-import scalafx.beans.property.IntegerProperty
 import scalafx.util.converter.NumberStringConverter
 /**
   * Created by zxj on 2017/2/25.
@@ -38,8 +36,8 @@ class Demo extends Application{
     val generator = new MazeGenerator(firstMatrix)
     generator.generateBlcoks()
     val algorithms: Array[((Int, Int), (Int, Int)) => SearchResult] =
-      Array(generator.forwoardAStar, generator.forwoardAStar, generator.backwardAStar)
-    var algorithm: ((Int, Int), (Int, Int)) => SearchResult = generator.forwoardAStar
+      Array(generator.forwardAStar, generator.forwardAStar, generator.adaptiveAStar(5))
+    var algorithm: ((Int, Int), (Int, Int)) => SearchResult = generator.forwardAStar
   override def start (primaryStage: Stage) = {
 
      val root = new Group()

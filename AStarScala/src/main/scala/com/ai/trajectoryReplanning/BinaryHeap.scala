@@ -23,11 +23,45 @@ class BinaryHeap[T](val ord: Ordering[T]) {
     }
 
   }
-  
+
+  def findIndex(input: T, condition: (T, T) => Boolean): Option[Int] = {
+    def findCertain(current: Int, input: T, condition: (T, T) => Boolean): Option[Int] = {
+      if (current > list.size - 1) {
+        return None
+      }
+      val currentItem = list(current)
+      if (condition(currentItem, input)) {
+        return Some(current)
+      }
+      val left = findCertain(leftChild(current), input, condition)
+      if (left.nonEmpty){
+        return left
+      }
+      findCertain(rightChild(current), input, condition)
+    }
+    if (list.isEmpty) {
+      return None
+    }
+    findCertain(0, input, condition)
+  }
+
   def += (element: T): Unit = enqueue(element)
 
   private def parentIndex(childIndex: Int) = childIndex /2 + childIndex % 2 - 1
-  
+
+  def enqueueOrUpdate(input: T, condition:(T, T) => Boolean): Unit = {
+    val index = findIndex(input, condition).getOrElse(-1)
+    if (index < 0){
+      enqueue(input)
+    }
+    else {
+      var element = list(index)
+      element = input
+      listUp(index)
+    }
+  }
+
+  def removeAll() = list.clear()
 
   private def bubbleUp[T](indexChild: Int, indexParent: Int) : Unit = {
     if (ord.gt(list(indexChild), list(indexParent))) {
@@ -35,6 +69,15 @@ class BinaryHeap[T](val ord: Ordering[T]) {
       if(indexParent > 0)
         bubbleUp(indexParent, parentIndex(indexParent))
     }
+  }
+
+  def listUp[T](index: Int): Unit ={
+    if (index > 0)
+      bubbleUp(index, parentIndex(index))
+  }
+
+  def getWithIndex(index: Int) = {
+    list(index)
   }
 
   private def swap(index1: Int, index2: Int): Unit = {
