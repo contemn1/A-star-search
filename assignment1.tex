@@ -8,6 +8,7 @@
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
 
+
 \lstset{frame=tb,
   language=Python,
   aboveskip=3mm,
@@ -29,6 +30,7 @@
 \date{} % delete this line to display the current date
 
 %%% BEGIN DOCUMENT
+\graphicspath{ {AStarScala/resources/} }
 
 \begin{document}
 \begin{titlepage}
@@ -38,7 +40,7 @@
 
 % Upper part of the page
 
-\textsc{\LARGE University of Rutgers}\\[1.5cm]
+\textsc{\LARGE Artificial Intelligence}\\[1.5cm]
 
 \textsc{\Large Assignment 1: Fast Trajectory Planning}\\[0.5cm]
 
@@ -81,7 +83,7 @@ for i in traverselist:
 The following picture is a visualization implement by scala
 
 
-\includegraphics[width=1\linewidth]{maze.png}
+\includegraphics[width=1\linewidth]{maze}
 
 \section*{Part 1}
 (a)While the initial agent explored three cells next to it which is unblocked, the three cells have same \emph{g-values} 1, different \emph{h-values}. Base on Manhhatan distance, the right one cell has the samllest \emph{g-value} 2, so it has the smallest \emph{f-value} 3, so the right one will be expanded first.
@@ -117,12 +119,18 @@ the results show that Repeated Forward A* and Repeated Backward A* have no signi
 \section*{Part 4}
 The definition of Manhattan distance: The distance between two points measured along axes at right angles. If the agent only moves in four compass directions, it will only move along the axes we built, it assures that the Manhattan distances are consistent.
 
-(OFFICIAL ANSWER)Adaptive A* solves a series of similar but not necessar- ily identical search problems. However, it is important that the h-values remain consistent with respect to the goal state from search problem to search problem. The following changes can occur from search problem to search problem:
-? The start state changes. In this case, Adaptive A* does not need to do anything since the h-values remain consistent with respect to the goal state.
-? The goal state changes. In this case, Adaptive A* needs to correct the h-values. Assume that the goal state changes from sgoal to s?goal. Adaptive A* then updates (= overwrites) the h-values of all states s by assigning
-h(s) := max(H (s, s?goal ), h(s) ? h(s?goal )). (2)
-The updated h-values are consistent with respect to the new goal state [9]. However, they are poten- tially less informed than the immediately preceeding h-values. Taking the maximum of h(s) ? h(s?goal) and theuser-suppliedH-valueH(s,s?goal)withrespectto the new goal state ensures that the h-values used by Adaptive A* dominate the user-supplied H-values with respect to the new goal state at least weakly.
-? At least one action cost changes. If no action cost decreases, Adaptive A* does not need to do anything since the h-values remain consistent with respect to the goal state. This is easy to see. Let c denote the orig- inal action costs and c? the new action costs after the changes. Then, h(s) ? c(s, a) + h(succ(s, a)) for s ?
+It's known that the initial heuristic h is consistent, which means that for any initial state s,  \(h[s] \leq h[s_{succ}] + c(s, a)\) . This inequality will hold for all non-goal state s and their corresponding actions. if some action costs c(s, a) increases from c to c', and $c(s, a) \leq c'(s, a)$,   \(h[s] \leq h[s_{succ}] + c(s, a) \leq h[s_{succ}] + c'(s, a)\) , the heuristic remain consistent. The heuristic function h of state s become $h_{new}$,  $(h_{new}) = g[\bar{s}] + h[\bar{s}]  - g[s]$ and expansion. They, we can divide s into the following situations.
+
+\begin{enumerate}
+\item both s and succ(s, a) were expanded.  $(h_{new}[s]) = g[\bar{s}] + h[\bar{s}]  - g[s]$ $(h_{new}[succ(s, a)]) = g[\bar{s}] + h[\bar{s}]  - g[succ(s, a)]$, according to triangle inequality,  $ g[succ(s, a)] \leq g(s) + c(s, a)$, 
+$(h_{new}[s]) = g[\bar{s}] + h[\bar{s}] - g[s] \leq  g[\bar{s}] + h[\bar{s}] - (g[succ(s, a)] - c(s, a)$. thus $(h_{new}[s]) \leq (h_{new}[succ(s, a)]) + c(s, a)$
+\item 
+s were expanded but succ(s, a) were not expanded, $(h_{new}[s]) = g[\bar{s}] + h[\bar{s}]  - g[s]$ , $g[\bar{s}] + h[\bar{s}] \leq f[succ(s, a)]$,  $h_{new}[s] = g[\bar{s}] + h[\bar{s}]  - g[s] \leq g[succ(s, a)] + h'_{new}[succ(s, a)] -g[succ(s, a)] + c[s, a] \leq h'_{new}[succ(s, a)] +  c[s, a] $
+\item 
+both s and succ(s, a) were not expanded, $then h[s] \leq h[(succ(s, a))] + c(s, a)$
+\end{enumerate}
+
+
 \newpage
 \section*{Part 5}
 \subsection*{5.1}
