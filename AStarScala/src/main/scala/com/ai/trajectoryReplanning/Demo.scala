@@ -36,7 +36,7 @@ class Demo extends Application{
     val generator = new MazeGenerator(firstMatrix)
     generator.generateBlcoks()
     val algorithms: Array[((Int, Int), (Int, Int)) => SearchResult] =
-      Array(generator.forwardAStar, generator.forwardAStar, generator.adaptiveAStar(5))
+      Array(generator.forwardAStar, generator.forwardAStar, generator.adaptiveAStar(8))
     var algorithm: ((Int, Int), (Int, Int)) => SearchResult = generator.forwardAStar
   override def start (primaryStage: Stage) = {
 
@@ -61,6 +61,7 @@ class Demo extends Application{
     val cancelButton = new Button("cancel")
     cancelButton.setOnAction {(_) =>
       setColor(closeList, Color.WHITE)
+
     }
 
     val actionBox = new HBox()
@@ -119,6 +120,8 @@ class Demo extends Application{
         closeList = result.costMap.keys.toList
         setColor(result.costMap.keys, Color.PINK)
         setColor(resultList, Color.RED)
+        println(closeList.size)
+        println(pathList.size)
       }
       playField(startX.intValue())(startY.intValue()).setFillColor(Color.BLUE)
       playField(endX.intValue())(endY.intValue()).setFillColor(Color.GREEN)

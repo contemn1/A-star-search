@@ -17,7 +17,6 @@ object MazeGeneratorTest {
     val succeed = result.success
     val resultMap = result.sourceMap
     if (succeed) {
-
       val resultList = getResultPath(end, resultMap)
       println(resultList.size)
       resultList.foreach(tuple => print(tuple + "-> "))
@@ -45,6 +44,6 @@ object MazeGeneratorTest {
     val firstMatrix = initCellMatrix(101)
     val generator = new MazeGenerator(firstMatrix)
     generator.generateBlcoks()
-    showResult(generator.adaptiveAStar(5), (0, 0), (10, 0))
+    showResult(generator.adaptiveAStar(8), (1, 0), (40, 0))
   }
 }
