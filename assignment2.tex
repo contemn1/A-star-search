@@ -1,0 +1,145 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% University/School Laboratory Report
+% LaTeX Template
+% Version 3.1 (25/3/14)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Linux and Unix Users Group at Virginia Tech Wiki 
+% (https://vtluug.org/wiki/Example_LaTeX_chem_lab_report)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+
+\usepackage[version=3]{mhchem} % Package for chemical equation typesetting
+\usepackage{siunitx} % Provides the \SI{}{} and \si{} command for typesetting SI units
+\usepackage{graphicx} % Required for the inclusion of images
+\usepackage{amsmath} % Required for some math elements 
+\usepackage{caption}
+\usepackage{amssymb}
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+\renewcommand{\labelenumi}{\alph{enumi}.} % Make numbering in the enumerate environment by letter rather than number (e.g. section 6)
+
+%\usepackage{times} % Uncomment to use the Times New Roman font
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{Assignment 2} % Title
+
+\author{Xunjie \textsc{Zhu}  \& Xuan \textsc{Wang}} % Author name
+\date{\today} % Date for the report
+
+\begin{document}
+
+\maketitle % Insert the title, author and date
+
+\begin{center}
+\begin{tabular}{l r}
+Date Performed: & February 24 - March 1 , 2017 \\ % Date the experiment was performed
+\end{tabular}
+\end{center}
+
+% If you wish to include an abstract, uncomment the lines below
+% \begin{abstract}
+% Abstract text
+% \end{abstract}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 1
+%----------------------------------------------------------------------------------------
+
+
+
+%----------------------------------------------------------------------------------------
+%	SECTION 1
+%----------------------------------------------------------------------------------------
+
+\section{Problem 1}
+\subsection{a}
+\begin{itemize}
+\item when $h(n) = min(h_1(n), h_2(n))$ let  actual cost of from goal state to n be obj(n) If $h_1(n), h_2(n) $are  admissible $h_1(n) \leq obj(n), h_2(n) \leq obj(n) $  h(n) is admissible. h(n) is consistent  if  h\_1(n), h\_2(n) are consistent, 
+\begin{align*}
+& h_1(n) \leq h_1(n') + c(a, n , n') \\
+& h_2(n) \leq h_2(n') + c(a, n , n') \\
+&  h (n) = min(h_1(n), h_2(n)) \leq h_1(n) \leq  h_1(n') + c(a, n , n') \\
+ & h (n) =  min(h_1(n), h_2(n)) \leq h_2(n) \leq  h_2(n') + c(a, n , n') \\
+ & \because min(h_1(n'), h_2(n')) = h_1(n') or min(h_1(n'), h_2(n)) = h_2(n') \\
+ & \therefore h(n) \leq min(h_1(n'), h_2(n')) + c (a, n , n') = h(n') +  c(a, n , n') 
+\end{align*}
+\item 
+when h(n) = w h\_1(n) + (1-w) h\_2(n) 。If $h_1(n), h_2(n) $are  admissible $wh_1(n) \leq w obj(n), (1-w)h_2(n) \leq (1-w) obj(n), h(n) = wh_1(n) + (1-w)h_2(n)  \leq obj(n) $ if  $h_1(n), h_2(n)$ are consistent, h(n) is consistent
+\begin{align}
+& w h_1(n) \leq  w h_1(n') + w c(a, n , n') \\
+& (1-w)h_2(n) \leq  (1-w) h_2(n') + (1-w) c(a, n , n') \\
+&\because h(n) = w h_1(n) + (1-w) h_2(n) \leq wh_1(n') +   (1-w) h_2(n') +  c(a, n , n') \\
+& \therefore  h(n) \leq h(n') +   c(a, n , n')
+\end{align}
+
+\item when $h(n) = max(h_1(n), h_2(n))$  If $h_1(n), h_2(n) $are  admissible h(n) is admissible.  h(n) is consistent  if  h\_1(n), h\_2(n) are consistent, 
+\begin{align*}
+& h_1(n) \leq h_1(n') + c(a, n , n') \\
+& h_2(n) \leq h_2(n') + c(a, n , n') \\
+&  h_1(n) \leq max( h_1(n'), h_2(n')) + c(a, n , n') \\
+&  h_2(n) \leq max( h_1(n'), h_2(n')) + c(a, n , n') \\
+& \because max(h_1(n'), h_2(n')) = h_1(n')  \:or\:  max(h_1(n'), h_2(n)) = h_2(n') \\
+ & \therefore h(n) \leq max( h_1(n'), h_2(n')) + c(a, n , n'))
+\end{align*}
+\end{itemize}
+
+\subsection{b}
+The algorithm is guaranteed to be optimal if $0 \leq w \leq 1$.  when w = 0, dijkstra's search is performed, when w = 1, A* algorithm is performed, when w = 2. greedy best fit search is performed
+\section{Step 2}
+a) For the problem whose state set does not have multiple local maximum so that the local maximum is global maximum, hill climbing is better than simulated annealing.
+b)  For the problem whose data is  monotonously decreasing, the hill-climbing part of simulated annealing is not necessary
+c) Simulated annealing is a useful technique when a problem has many local maximum and the global maximum does not appear at the beginning.
+d) we can return the state with maximum value
+%----------------------------------------------------------------------------------------
+%	SECTION 3
+%----------------------------------------------------------------------------------------
+
+\section{Step 3}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 4
+%----------------------------------------------------------------------------------------
+
+\section{Step 4}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 5
+%----------------------------------------------------------------------------------------
+
+
+
+
+
+%----------------------------------------------------------------------------------------
+%	SECTION 6
+%----------------------------------------------------------------------------------------
+
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+
+\bibliographystyle{IEEEtran}
+
+\bibliography{sample}
+
+%----------------------------------------------------------------------------------------
+
+
+\end{document}
