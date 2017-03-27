@@ -1,0 +1,188 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% University/School Laboratory Report
+% LaTeX Template
+% Version 3.1 (25/3/14)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Linux and Unix Users Group at Virginia Tech Wiki 
+% (https://vtluug.org/wiki/Example_LaTeX_chem_lab_report)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+
+\usepackage[version=3]{mhchem} % Package for chemical equation typesetting
+\usepackage{siunitx} % Provides the \SI{}{} and \si{} command for typesetting SI units
+\usepackage{graphicx} % Required for the inclusion of images
+\usepackage{amsmath} % Required for some math elements 
+\usepackage{caption}
+\usepackage{amssymb}
+\usepackage{blkarray}
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+\renewcommand{\labelenumi}{\alph{enumi}.} % Make numbering in the enumerate environment by letter rather than number (e.g. section 6)
+
+%\usepackage{times} % Uncomment to use the Times New Roman font
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{Assignment 2} % Title
+
+\author{Xunjie \textsc{Zhu}  \& Xuan \textsc{Wang}} % Author name
+\date{\today} % Date for the report
+
+\begin{document}
+
+\maketitle % Insert the title, author and date
+
+\begin{center}
+\begin{tabular}{l r}
+\end{tabular}
+\end{center}
+
+% If you wish to include an abstract, uncomment the lines below
+% \begin{abstract}
+% Abstract text
+% \end{abstract}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 1
+%----------------------------------------------------------------------------------------
+
+
+
+%----------------------------------------------------------------------------------------
+%	SECTION 1
+%----------------------------------------------------------------------------------------
+
+\section{Problem 1}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 3
+%----------------------------------------------------------------------------------------
+
+\section{Problem 2}
+The most constrained variable is the variable that is most likely to get constrained to no possibilities and force backtracking, so that it can prune the search tree. Least-constraining-value heuristic is trying to leave the maximum ﬂexibility for subsequent variable assignment. Since we only need to find one solution, it's beneficial to look for most likely values first.
+%----------------------------------------------------------------------------------------
+%	SECTION 4
+%----------------------------------------------------------------------------------------
+
+\section{Problem 4}
+\subsection{Question a}
+let P(X) be the probability that variable X be true, and P($\neg$X) be the probability that variable X be false
+\begin{align*}
+P(A, B, C, D, E) &= P(A)P(B)P(C)P(D| A, B)P(E| B, C)\\
+  &= 0.2 * 0.5 * 0.8 * 0.1 *0.3\\
+  &= 0.0024
+\end{align*}
+
+\subsection{Question b}
+\begin{align*}
+P(\neg A, \neg B, \neg C, \neg D, \neg E) &= P(\neg A)P(\neg B)P(\neg C)P(\neg D| \neg A, \neg B) P(\neg E|\neg B, \neg C)\\
+  &= 0.8 * 0.5 * 0.2 * 0.9 *0.2\\
+  &= 0.0144
+\end{align*}
+
+\subsection{Question c}
+\begin{align*}
+P(\neg A| B, C, D, E) &=  \alpha P(\neg A)P(B)P(C)P(D| A, B)P(E|B, C)\\
+  &= \alpha  0.8 * 0.5 * 0.8 * 0.6 *0.3\\
+  &= 0.96
+\end{align*}
+
+
+%----------------------------------------------------------------------------------------
+%	SECTION 5
+%----------------------------------------------------------------------------------------
+
+\section{Problem 6}
+\subsection{Question a}
+The variable is independent of its non-descendants given its parents. So
+\begin{align*}
+P(X | MB(X)) &= P(X | Parents(X), Children(X)) \\
+	&= \alpha P(X, Parents(X), Children(X)) \\
+	&= \alpha P(X, Parents(X), Y)) \\
+	&= \alpha P(X| Parents(X)) \prod_{Y_i} P(Y_i | Parents(Y_i))
+\end{align*}
+
+\subsection{Question b}
+There two non evidence variable Cloudy and Rain and each variable has 2 possible states \{true, false\}, so  there are 4 possible states for the approach to consider.
+
+\subsection{Question c} 
+There are 4 possible initial states for variables  Cloudy, Sprinkler, Rain and Wet Grass, \{true, true, false, true\},  \{true, true, true, true\},  \{false, true, true, true\}, \{false, true, false, true\}
+\begin{itemize}
+\item When the initial state is \{true, true, false, true\}, the first non evidence variable can be Cloudy or Rain
+\begin{itemize}
+\item When Cloudy is sampled first, P(Cloudy| Sprinkler=true, Rain = false)=0.04. Cloudy is false. The current new state is  \{false, true, false, true\}.  
+\item Then Rain should be sampled. P(Rain=True| Sprinkler=True, Cloudy=False, Wet Grass=True) = 0.22. Rain is false. The current new state is  \{false, true, false, true\}.
+\item When the rain is sampled first, P(Rain=True| Sprinkler=True, Cloudy=True, Wet Grass=True) = 0.81, The current new state is  \{true, true, true, true\}. 
+\item Then Cloudy should be sampled,  P(Cloudy| Sprinkler=True, Rain = True)=0.44. Cloudy is false. The current new state is  \{false, true, true, true\}.
+\end{itemize}
+\item When the initial state is \{true, true, true, true\}, the first non evidence variable can be Cloudy or Rain
+\begin{itemize}
+\item When Cloudy is sampled first, P(Cloudy| Sprinkler=True, Rain = True)=0.44. Cloudy is false. The current new state is  \{false, true, true, true\}.  
+\item Then Rain should be sampled. P(Rain=True| Sprinkler=True, Cloudy=False, Wet Grass=True) =0.22. Rain is false. The current new state is  \{false, true, false, true\}.
+\item When the rain is sampled first, P(Rain=True| Sprinkler=True, Cloudy=True, Wet Grass=True) = 0.81, The current new state is  \{true, true, true, true\}. 
+\item Then Cloudy should be sampled,  P(Cloudy| Sprinkler=True, Rain = True)=0.44. Cloudy is false. The current new state is  \{false, true, true, true\}.
+\end{itemize}
+\item When the initial state is \{false, true, true, true\}, the first non evidence variable can be Cloudy or Rain
+\begin{itemize}
+\item When Cloudy is sampled first, P(Cloudy| Sprinkler=true, Rain = true)=0.44. Cloudy is false. The current new state is  \{false, true, true, true\}.  
+\item Then Rain should be sampled. P(Rain=True| Sprinkler=true, Cloudy=false, Wet Grass=True) =0.22. Rain is false. The current new state is  \{false, true, false, true\}.
+\item When the rain is sampled first, P(Rain=True| Sprinkler=true, Cloudy=false, Wet Grass=True) = 0.22, The current new state is  \{false, true, false, true\}. 
+\item Then Cloudy should be sampled,  P(Cloudy| Sprinkler=true, Rain = false)=0.04. Cloudy is false. The current new state is  \{false, true, false, true\}.
+\end{itemize}
+\item When the initial state is \{false, true, false, true\}, the first non evidence variable can be Cloudy or Rain
+\begin{itemize}
+\item When Cloudy is sampled first, P(Cloudy| Sprinkler=true, Rain = false)=0.04. Cloudy is false. The current new state is  \{false, true, false, true\}.  
+\item Then Rain should be sampled. P(Rain=True| Sprinkler=true, Cloudy=false, Wet Grass=True) =0.22. Rain is false. The current new state is  \{false, true, false, true\}.
+\item When the rain is sampled first, P(Rain=True| Sprinkler=true, Cloudy=false, Wet Grass=True) = 0.22, The current new state is  \{false, true, false, true\}. 
+\item Then Cloudy should be sampled,  P(Cloudy| Sprinkler=true, Rain = false)=0.04. Cloudy is false. The current new state is  \{false, true, false, true\}.
+\end{itemize}
+\end{itemize}
+According to all the circumstances above, the transition matrix should be 
+
+\[
+\begin{blockarray}{cccccc}
+\{t, t, t, t\} & \{t, t, f, t\} & \{f, t, t, t\} & \{f, t, f, t\} \\
+\begin{block}{(ccccc)c}
+  0.33 & 0 & 0.67 & 1 & \{t, t, f, t\} \\
+  0.5 & 0 & 0 & 0.5 &  \{t, t, t, t\} \\
+  0 & 0 & 0.33 & 0.67 & \{f, t, t, t\} \\
+  0 & 0 & 0 & 1 & \{f, t, f, t\} \\
+\end{block}
+\end{blockarray}
+ \]
+
+
+
+
+%----------------------------------------------------------------------------------------
+%	SECTION 6
+%----------------------------------------------------------------------------------------
+
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+
+\bibliographystyle{IEEEtran}
+
+\bibliography{sample}
+
+%----------------------------------------------------------------------------------------
+
+
+\end{document}
