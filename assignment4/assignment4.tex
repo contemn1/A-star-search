@@ -210,9 +210,398 @@ P(hot4, hot5, cold6 | hot1, cold2, cold3) &= 0.5 (P(hot4, hot5, cold6 | B) + P(h
 \begin{align*}
 P(x_4 | hot_1, cold_2, cold_3) = \sum_{x_3}P(x_4| x_3) P(x_3 | hot_1, cold_2, cold_3)
 \end{align*}
-$P(X_4 | hot_1, cold_2, cold_3) = \{0, \frac{1}{4}, \frac{1}{2}, \frac{1}{4}, 0, 0  \}$
+$P(X_4 | hot_1, cold_2, cold_3) = \{0, \frac{1}{4}, \frac{1}{2}, \frac{1}{4}, 0, 0  \}$ \\
 $P(X_5 | hot_1, cold_2, cold_3) = \{0, \frac{1}{8}, \frac{3}{8}, \frac{3}{8}, \frac{1}{8}, 0  \}$
+\subsection*{Particle Filtering}
+In day 2:
+\begin{itemize}
+\item prediction
+\begin{align*}
+P(B|A) &= 0.5 \\
+P(A|A) &= 0.5 \\
+P(x|A) &= 0 (x \in {C, D, E, F})
+\end{align*}
+The location of 5 particles after sampling is \{B, B, A, A, B\}
+\item weighting 
+\begin{align*}
+P(cold | A) &= 0 \\
+P(cold | B) &= 1 \\
+\end {align*}
+\item resampling \\
+The location of 5 particles after resampling is \{B, B, B, B, B\}
+\end{itemize} 
+In day 3:
+\begin{itemize}
+\item prediction
+\begin{align*}
+P(B|B) &= 0.5 \\
+P(C|B) &= 0.5 \\
+P(x|B) &= 0 (x \in {A, D, E, F})
+\end{align*} 
+The location of 5 particles after sampling is \{C, C, B, C, C\}
+\item weighting  
+\begin{align*}
+P(cold | B) &= 0.5\\
+P(cold | C) &= 0.5
+\end{align*}
+\item resampling \\
+The location of 5 particles after resampling is \{B, C, B, C, C\}
+\end{itemize} 
+\begin{align*}
+P(B | hot 1 , cold 2 , cold 3 ) &= 0.4 \\ 
+P(C | hot 1 , cold 2 , cold 3 ) &= 0.6 \\
+P(x | hot 1 , cold 2 , cold 3 ) &= 0 (x \in {A, D, E, F})
+\end {align*}
 
+
+\section*{Problem 2}
+\subsection*{Question 1}
+X direction
+\begin {align*}
+P(X_{t+1} | Z_{t+1}) &= \alpha e^{- \frac{1}{2} \frac{(X_{t+1} - \mu_{t+1_x})^2}{\sigma_{t+1_x}^2}} \\
+                     & = N(\mu_{t+1_x}, \sigma_{t+1_x}^2)
+\end {align*}
+with
+\begin {align*}
+	u_{t+1_x} &= \frac{(\sigma_t^2 + \sigma_x^2)Z_{t+1_x} + \sigma_z^2(u_t + v_x)}{\sigma_t^2 + \sigma_x^2 + \sigma_z^2} \\
+	\sigma_{t+1_x}^2 &= \frac{(\sigma_t^2 + \sigma_x^2) \sigma_z^2}{\sigma_t^2 + \sigma_x^2 + \sigma_z^2}
+\end {align*}
+
+When t=0:\\
+
+${\sigma_{0}}^{2} = 0.1$
+
+${\sigma_{x}}^{2} = 1$
+
+${\sigma_{z}}^{2} = 3$
+
+${\mu_{0}}= 0$
+
+${v_{x}}= 10$
+
+${Z_{1_x}}= 8$
+
+${\mu_{1_x}}=  \frac{(0.1+1)8+3(0+10)}{0.1+1+3} = 9.4634$
+
+${\sigma_{1_x}}^{2}=  \frac{(0.1+1)3}{0.1+1+3} = 0.8048$
+
+$ P(X_1 | Z_1) \sim N(9.4634,0.8048)$
+
+Y direction
+\begin {align*}
+P(X_{t+1} | Z_{t+1}) &= \alpha e^{- \frac{1}{2} \frac{(Y_{t+1} - \mu_{t+1_y})^2}{\sigma_{t+1_y}^2}} \\
+                     & = N(\mu_{t+1_y}, \sigma_{t+1_y}^2)
+\end {align*}
+with
+\begin {align*}
+	u_{t+1_y} &= \frac{(\sigma_t^2 + \sigma_y^2)Z_{t+1_y} + \sigma_z^2(u_t + v_y)}{\sigma_t^2 + \sigma_y^2 + \sigma_z^2} \\
+	\sigma_{t+1_y}^2 &= \frac{(\sigma_t^2 + \sigma_y^2) \sigma_z^2}{\sigma_t^2 + \sigma_y^2 + \sigma_z^2}
+\end {align*}
+When t = 0: \\
+${\sigma_{0}}^{2} = 0.1$
+
+${\sigma_{y}}^{2} = 1$
+
+${\sigma_{z}}^{2} = 3$
+
+${\mu_{0}}= 0$
+
+${v_{y}}= 5$
+
+${Z_{1y}}= 6$
+
+${\mu_{1_y}}=  \frac{(0.1+1)6+3(0+5)}{0.1+1+3} = 2.4634$
+
+${\sigma_{1_y}}^{2}=  \frac{(0.1+1)3}{0.1+1+3} = 0.8048$
+
+$P(Y_1|Z_1) \sim N(2.4634,0.8048)$
+\subsection*{Question 2}
+When t = 1: \\
+X direction
+${\sigma_{1_x}}^{2} = 0.8048$
+
+${\sigma_{x}}^{2} = 1$
+
+${\sigma_{z}}^{2} = 3$
+
+${\mu_{1_x}}= 9.4634 $
+
+${Z_{2_x}}= 19$
+
+${v_{x}}= 10$
+
+${\mu_{2_x}}=  \frac{(0.8048 +1)19+3( 9.4634 + 10)}{0.8048+1+3} = 19.2893$
+
+${\sigma_{2_x}}^{2}=  \frac{(0.8048+1)3}{0.8048+1+3} = 1.1269$
+
+$P(X_{2}|Z_2)  \sim N(19.2893, 1.1269)$
+
+Y direction: \\
+${\sigma_{y}}^{2} = 1$
+
+${\sigma_{1_y}}^{2}=  0.8048$
+
+${\mu_{1_y}}= 2.4634$
+
+${Z_{2_y}}= 9$
+
+${\mu_{2_y}}=  \frac{(0.8048 +1)9+3( 2.4634 + 10)}{0.8048+1+3} = 11.1625$
+
+${\sigma_{2_y}}^{2}=  \frac{(0.8048+1)3}{0.8048+1+3} = 1.1269$
+
+$P(Y_{2}|Z_2)  \sim N(11.1625, 1.1269)$
+
+\section*{Problem 3}
+To simplify, assume:
+
+{east,west,north,south} = {$\rightarrow,\leftarrow,\uparrow\,\downarrow $}
+
+(1,2) = 12
+
+
+\subsection*{1.Value Iteration algorithm}
+
+\begin{table}[!hbp]
+\begin{tabular}{|c|c|c|c|}
+\hline
+\hline
+ & V0 & V1 & V2  \\
+\hline
+$s_{00}$ & 0 & 0 & 0  \\
+\hline
+$s_{01}$ & 0 & -5 & -5+0.9*10=4  \\
+\hline
+$s_{02}$ & 0 & 10 & 10+10=20  \\
+\hline
+$s_{10}$ & 0 & 0 & 0 \\
+\hline
+$s_{11}$ & 0 & 0 & $0+0.9*0+\frac{0.1}{3}*-5=\frac{-0.5}{3}$\\
+\hline
+$s_{12}$ & 0 & 0 & 0+0.9*10=9  \\
+\hline
+$s_{20}$ & 0 & 0 & 0  \\
+\hline
+$s_{21}$ & 0 & 0 & 0  \\
+\hline
+$s_{22}$ & 0 & 0 & 0 \\
+\hline
+\end{tabular}
+\caption{Value iteration}
+\end{table} 
+
+To generate $\Pi^{*}$,  Assign:
+
+Having the same $R(s,a)$ for each $a \in A$, so $R(s,a)$ is ignored.
+
+$(00,\rightarrow) max(0,0,0.4,3.6)=3.6$
+
+$(01,\rightarrow) max(4,0.99167,0.85,17.991)=17.991$
+
+$(02,\rightarrow) max(20,20,4.5,4)=20$ 
+
+$(10,\leftarrow) max(0,-0.15,-0.008,-0.008)=0$
+
+$(11,\rightarrow) max(0.433,0.433,8.233,3.9)=8.233$
+
+$(12,\uparrow) max(9,17.99167,0.85,0.99167)=17.99167$
+
+$(20,\rightarrow) max(0,0,0,0)=0$
+
+$(21,\downarrow) max(0,-0.15,-0.008,-0.008)=0$
+
+$(22,\uparrow) max(0,0,0.81,0.09)=0.81$
+
+\begin{table}[!hbp]
+\begin{tabular}{|c|c|c|c|}
+\hline
+\hline
+ & 0 & 1 & 2  \\
+\hline
+0 & $\rightarrow$ & $ \rightarrow$ & $\rightarrow$  \\
+\hline
+1 & $\leftarrow$ & $\rightarrow$ & $\uparrow$  \\
+\hline
+2 & $\rightarrow$ & $\downarrow$ & $\uparrow$  \\
+\hline
+\end{tabular}
+\caption{Result}
+\end{table} 
+
+\clearpage
+
+\subsection*{2.Policy Iteration Algorithm}
+
+Policy $\Pi_{0}$
+
+$T(00,\rightarrow,01)=0.9$
+
+$T(00,\rightarrow,10)=0.1$
+
+$T(01,\rightarrow,02)=0.9$
+
+$T(01,\rightarrow,11)=\frac{0.1}{2}$
+
+$T(01,\rightarrow,00)=\frac{0.1}{2}$
+
+$T(02,\rightarrow,02)=1$
+
+$T(10,\rightarrow,11)=0.9$
+
+$T(10,\rightarrow,00)=\frac{0.1}{2}$
+
+$T(10,\rightarrow,20)=\frac{0.1}{2}$
+
+$T(11,\rightarrow,12)=0.9$
+
+$T(11,\rightarrow,01)=\frac{0.1}{3}$
+
+$T(11,\rightarrow,10)=\frac{0.1}{3}$
+
+$T(11,\rightarrow,21)=\frac{0.1}{3}$
+
+$T(12,\rightarrow,12)=1$
+
+$T(20,\rightarrow,21)=0.9$
+
+$T(20,\rightarrow,10)=0.1$
+
+$T(21,\rightarrow,22)=0.9$
+
+$T(21,\rightarrow,11)=\frac{0.1}{2}$
+
+$T(21,\rightarrow,20)=\frac{0.1}{2}$
+
+$T(22,\rightarrow,22)=1$
+
+\begin{table}[!hbp]
+\begin{tabular}{|c|c|c|c|}
+\hline
+\hline
+ & V0 & V1 & V2  \\
+\hline
+$s_{00}$ & 0 & 0 & -4.5  \\
+\hline
+$s_{01}$ & 0 & -5 & 4  \\
+\hline
+$s_{02}$ & 0 & 10 & 20  \\
+\hline
+$s_{10}$ & 0 & 0 & 0 \\
+\hline
+$s_{11}$ & 0 & 0 & $\frac{-0.5}{3}$ \\
+\hline
+$s_{12}$ & 0 & 0 & 0  \\
+\hline
+$s_{20}$ & 0 & 0 & 0  \\
+\hline
+$s_{21}$ & 0 & 0 & 0  \\
+\hline
+$s_{22}$ & 0 & 0 & 0 \\
+\hline
+\end{tabular}
+\caption{Policy evaluation}
+\end{table} 
+
+Update to $\Pi_{1}$ Assign:
+
+$(00,\rightarrow) max=3.6$
+
+$(01,\rightarrow) max=17.767$
+
+$(02,\rightarrow) max=20$ 
+
+$(10,\leftarrow) max=0$
+
+$(11,\uparrow) max=3.6$
+
+$(12,\uparrow) max=17.992$
+
+$(20,\rightarrow) max=0$
+
+$(21,\downarrow) max=0$
+
+$(22,\rightarrow) max=0$
+
+Having the same $R(s,a)$ for each $a \in A$, so $R(s,a)$ is ignored.
+
+\begin{table}[!hbp]
+\begin{tabular}{|c|c|c|c|}
+\hline
+\hline
+ & 0 & 1 & 2  \\
+\hline
+0 & $\rightarrow$ & $\rightarrow$ & $\rightarrow$  \\
+\hline
+1 & $\leftarrow$ & $\uparrow$ & $\uparrow$  \\
+\hline
+2 & $\rightarrow$ & $\downarrow$ & $\rightarrow$  \\
+\hline
+\end{tabular}
+\caption{Result}
+\end{table} 
+
+\begin{table}[!hbp]
+\begin{tabular}{|c|c|c|c|}
+\hline
+\hline
+ & V0 & V1 & V2  \\
+\hline
+$s_{00}$ & -4.5 & 3.6 & 11.49  \\
+\hline
+$s_{01}$ & 4 & 12.767 & 22.36  \\
+\hline
+$s_{02}$ & 20 & 30 & 40  \\
+\hline
+$s_{10}$ & 0 & 0 & 0 \\
+\hline
+$s_{11}$ & $\frac{-0.5}{3}$ & 3.6 & 12.09 \\
+\hline
+$s_{12}$ & 0 & 17.99167 & 27.18  \\
+\hline
+$s_{20}$ & 0 & 0 & 0  \\
+\hline
+$s_{21}$ & 0 & 0 & 0  \\
+\hline
+$s_{22}$ & 0 & 0 & 0 \\
+\hline
+\end{tabular}
+\caption{Second policy evaluation}
+\end{table} 
+
+Update to $\Pi_{2}$ Assign:
+
+$(00,\rightarrow) max=20.124$
+
+$(01,\rightarrow) max=37.179$
+
+$(02,\rightarrow) max=20$ 
+
+$(10,\rightarrow) max=11.455$
+
+$(11,\rightarrow) max=25.207$
+
+$(12,\uparrow) max=36.6045$
+
+$(20,\rightarrow) max=0$
+
+$(21,\uparrow) max=10.881$
+
+$(22,\uparrow) max=24.462$
+
+\begin{table}[!hbp]
+\begin{tabular}{|c|c|c|c|}
+\hline
+\hline
+ & 0 & 1 & 2  \\
+\hline
+0 & $\rightarrow$ & $\rightarrow$ & $\rightarrow$  \\
+\hline
+1 & $\rightarrow$ & $\rightarrow$ & $\uparrow$  \\
+\hline
+2 & $\rightarrow$ & $\uparrow$ & $\uparrow $ \\
+\hline
+\end{tabular}
+\caption{Result}
+\end{table} 
 
 
 \end{document}
