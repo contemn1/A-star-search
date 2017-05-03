@@ -200,9 +200,258 @@ ${\sigma_{1y}}^{2}=  \frac{(0.1+1)3}{0.1+1+3} = 0.8048$
 
 $Y_{t1} \sim N(2.4634,0.8048)$
 
+\pagebreak
+
 \section*{Problem 3}
 
+To simplify, assume:
 
+{east,west,north,south} = {\rightarrow,\leftarrow,\uparrow\,\downarrow}
+
+(1,2) = 12
+
+
+\item{1.Value Iteration algorithm}
+
+\begin{table}[!hbp]
+\begin{tabular}{|c|c|c|c|}
+\hline
+\hline
+ & V0 & V1 & V2  \\
+\hline
+$s_{00}$ & 0 & 0 & 0  \\
+\hline
+$s_{01}$ & 0 & -5 & -5+0.9*10=4  \\
+\hline
+$s_{02}$ & 0 & 10 & 10+10=20  \\
+\hline
+$s_{10}$ & 0 & 0 & 0 \\
+\hline
+$s_{11}$ & 0 & 0 & $0+0.9*0+\frac{0.1}{3}*-5=\frac{-0.5}{3}$\\
+\hline
+$s_{12}$ & 0 & 0 & 0+0.9*10=9  \\
+\hline
+$s_{20}$ & 0 & 0 & 0  \\
+\hline
+$s_{21}$ & 0 & 0 & 0  \\
+\hline
+$s_{22}$ & 0 & 0 & 0 \\
+\hline
+\end{tabular}
+\caption{Value iteration}
+\end{table} 
+
+To generate $\Pi^{*}$,  Assign:
+
+Having the same $R(s,a)$ for each a \in A, 
+so $R(s,a)$ is ignored.
+
+$(00,\rightarrow) max(0,0,0.4,3.6)=3.6$
+
+$(01,\rightarrow) max(4,0.99167,0.85,17.991)=17.991$
+
+$(02,\rightarrow) max(20,20,4.5,4)=20$ 
+
+$(10,\leftarrow) max(0,-0.15,-0.008,-0.008)=0$
+
+$(11,\rightarrow) max(0.433,0.433,8.233,3.9)=8.233$
+
+$(12,\uparrow) max(9,17.99167,0.85,0.99167)=17.99167$
+
+$(20,\rightarrow) max(0,0,0,0)=0$
+
+$(21,\downarrow) max(0,-0.15,-0.008,-0.008)=0$
+
+$(22,\uparrow) max(0,0,0.81,0.09)=0.81$
+
+\begin{tabular}{|c|c|c|c|}
+\hline
+\hline
+ & 0 & 1 & 2  \\
+\hline
+0 & \rightarrow & \rightarrow & \rightarrow  \\
+\hline
+1 & \leftarrow & \rightarrow & \uparrow  \\
+\hline
+2 & \rightarrow & \downarrow & \uparrow  \\
+\hline
+\end{tabular}
+\caption{Result}
+\end{table} 
+
+\clearpage
+
+\item{2.Policy Iteration Algorithm}
+
+Policy $\Pi_{0}$
+
+$T(00,\rightarrow,01)=0.9$
+
+$T(00,\rightarrow,10)=0.1$
+
+$T(01,\rightarrow,02)=0.9$
+
+$T(01,\rightarrow,11)=\frac{0.1}{2}$
+
+$T(01,\rightarrow,00)=\frac{0.1}{2}$
+
+$T(02,\rightarrow,02)=1$
+
+$T(10,\rightarrow,11)=0.9$
+
+$T(10,\rightarrow,00)=\frac{0.1}{2}$
+
+$T(10,\rightarrow,20)=\frac{0.1}{2}$
+
+$T(11,\rightarrow,12)=0.9$
+
+$T(11,\rightarrow,01)=\frac{0.1}{3}$
+
+$T(11,\rightarrow,10)=\frac{0.1}{3}$
+
+$T(11,\rightarrow,21)=\frac{0.1}{3}$
+
+$T(12,\rightarrow,12)=1$
+
+$T(20,\rightarrow,21)=0.9$
+
+$T(20,\rightarrow,10)=0.1$
+
+$T(21,\rightarrow,22)=0.9$
+
+$T(21,\rightarrow,11)=\frac{0.1}{2}$
+
+$T(21,\rightarrow,20)=\frac{0.1}{2}$
+
+$T(22,\rightarrow,22)=1$
+
+\begin{table}[!hbp]
+\begin{tabular}{|c|c|c|c|}
+\hline
+\hline
+ & V0 & V1 & V2  \\
+\hline
+$s_{00}$ & 0 & 0 & -4.5  \\
+\hline
+$s_{01}$ & 0 & -5 & 4  \\
+\hline
+$s_{02}$ & 0 & 10 & 20  \\
+\hline
+$s_{10}$ & 0 & 0 & 0 \\
+\hline
+$s_{11}$ & 0 & 0 & $\frac{-0.5}{3}$ \\
+\hline
+$s_{12}$ & 0 & 0 & 0  \\
+\hline
+$s_{20}$ & 0 & 0 & 0  \\
+\hline
+$s_{21}$ & 0 & 0 & 0  \\
+\hline
+$s_{22}$ & 0 & 0 & 0 \\
+\hline
+\end{tabular}
+\caption{Policy evaluation}
+\end{table} 
+
+Update to $\Pi_{1}$ Assign:
+
+$(00,\rightarrow) max=3.6$
+
+$(01,\rightarrow) max=17.767$
+
+$(02,\rightarrow) max=20$ 
+
+$(10,\leftarrow) max=0$
+
+$(11,\uparrow) max=3.6$
+
+$(12,\uparrow) max=17.992$
+
+$(20,\rightarrow) max=0$
+
+$(21,\downarrow) max=0$
+
+$(22,\rightarrow) max=0$
+
+Having the same $R(s,a)$ for each a \in A, so $R(s,a)$ is ignored.
+
+\begin{tabular}{|c|c|c|c|}
+\hline
+\hline
+ & 0 & 1 & 2  \\
+\hline
+0 & \rightarrow & \rightarrow & \rightarrow  \\
+\hline
+1 & \leftarrow & \uparrow & \uparrow  \\
+\hline
+2 & \rightarrow & \downarrow & \rightarrow  \\
+\hline
+\end{tabular}
+\caption{Result}
+\end{table} 
+
+\begin{table}[!hbp]
+\begin{tabular}{|c|c|c|c|}
+\hline
+\hline
+ & V0 & V1 & V2  \\
+\hline
+$s_{00}$ & -4.5 & 3.6 & 11.49  \\
+\hline
+$s_{01}$ & 4 & 12.767 & 22.36  \\
+\hline
+$s_{02}$ & 20 & 30 & 40  \\
+\hline
+$s_{10}$ & 0 & 0 & 0 \\
+\hline
+$s_{11}$ & $\frac{-0.5}{3}$ & 3.6 & 12.09 \\
+\hline
+$s_{12}$ & 0 & 17.99167 & 27.18  \\
+\hline
+$s_{20}$ & 0 & 0 & 0  \\
+\hline
+$s_{21}$ & 0 & 0 & 0  \\
+\hline
+$s_{22}$ & 0 & 0 & 0 \\
+\hline
+\end{tabular}
+\caption{Second policy evaluation}
+\end{table} 
+
+Update to $\Pi_{2}$ Assign:
+
+$(00,\rightarrow) max=20.124$
+
+$(01,\rightarrow) max=37.179$
+
+$(02,\rightarrow) max=20$ 
+
+$(10,\rightarrow) max=11.455$
+
+$(11,\rightarrow) max=25.207$
+
+$(12,\uparrow) max=36.6045$
+
+$(20,\rightarrow) max=0$
+
+$(21,\uparrow) max=10.881$
+
+$(22,\uparrow) max=24.462$
+
+\begin{tabular}{|c|c|c|c|}
+\hline
+\hline
+ & 0 & 1 & 2  \\
+\hline
+0 & \rightarrow & \rightarrow & \rightarrow  \\
+\hline
+1 & \rightarrow & \rightarrow & \uparrow  \\
+\hline
+2 & \rightarrow & \uparrow & \uparrow  \\
+\hline
+\end{tabular}
+\caption{Result}
+\end{table} 
 %\iffalse
 %\section*{Part 3}
 %\subsection*{3.1}
